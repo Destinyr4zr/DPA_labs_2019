@@ -13,5 +13,5 @@
             android:layout_marginEnd="76dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="173dp"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="174dp"
-            android:id="@+id/Loadview"/>
+            android:id="@+id/Loadview" android:visibility="visible"/>
 </android.support.constraint.ConstraintLayout>

@@ -9,13 +9,11 @@ class SecondActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.list_activity)
+        setContentView(R.layout.activity_second)
         val listView = findViewById<ListView>(R.id.listView)
-
         val adapter = ItemsAdapter(this)
         listView?.adapter = adapter
         adapter.notifyDataSetChanged()
-
-        Toast.makeText(this, "The second activity is started!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Переход к списку", Toast.LENGTH_SHORT).show()
     }
 }

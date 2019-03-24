@@ -17,7 +17,6 @@ class ItemsAdapter(private var activity: Activity, numberQuantity: Int = 1000000
 
     private class ViewHolder(row: View?) {
         var txtName: TextView? = null
-
         init { this.txtName = row?.findViewById(R.id.itemText) }
     }
 
@@ -33,12 +32,9 @@ class ItemsAdapter(private var activity: Activity, numberQuantity: Int = 1000000
             view = convertView
             viewHolder = view.tag as ViewHolder
         }
-
-        view?.setBackgroundResource(if (position % 2 == 0) R.color.darkColor else R.color.lightColor)
-
-        viewHolder.txtName?.setTextColor(ContextCompat.getColor(activity, if (position % 2 == 0) R.color.lightColor else R.color.darkColor))
-
-        val resStr = "${NumberToText.convertToText(position + 1)}(${position + 1})"
+        view?.setBackgroundResource(if (position % 2 == 0) R.color.Darkcolor else R.color.Lightcolor)
+        viewHolder.txtName?.setTextColor(ContextCompat.getColor(activity, if (position % 2 == 0) R.color.Lightcolor else R.color.Darkcolor))
+        val resStr = "${NumConverter.convertToText(position + 1)}(${position + 1})"
         viewHolder.txtName?.text = resStr
 
         return view as View

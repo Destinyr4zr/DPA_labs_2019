@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Lab 1</string>
+    <string name="list_item_title_example">ItemText</string>
+    <string name="list_item_img_descr">"Icon"</string>
 </resources>
