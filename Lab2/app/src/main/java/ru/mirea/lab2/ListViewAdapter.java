@@ -26,8 +26,49 @@ public class ListViewAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    private class ViewHolder (int position, View convertview, ListViewAdapter listtransfer)
+    private class ViewHolder
     {
+        public View linearLayout;
+        private ImageView image;
+        private TextView text;
+        private View view;
+
+        public ViewHolder (View itemview)
+        {
+//            super(itemview);
+            image = itemview.findViewById(R.id.itemImage);
+            text = itemview.findViewById(R.id.itemText);
+            linearLayout = itemview.findViewById(R.id.row);
+            this.view = itemview;
+        }
+    }
+
+    @Override
+    public int getCount() {
+        return itemCount;
+    }
+
+    @Override
+    public long getItemId (int index) {return 0;}
+
+    @Override
+    public Object getItem (int index) {return null;}
+
+    @Override
+    public View getView (int position, View convertView, ViewGroup parent)
+    {
+        View view = new View (context);
+        ViewHolder viewHolder = new ViewHolder();
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.list_item, null);
+            viewHolder = new ViewHolder(view);
+            view.setTag(viewHolder);
+        } else {
+            view = convertView;
+            viewHolder = view.getTag();
+        }
+
         final int index = position + 1;
         JSONArray data = JSONHolder.getInstance().getData();
 
@@ -54,40 +95,17 @@ public class ListViewAdapter extends BaseAdapter {
         listtransfer.linearLayout.setBackgroundColor(backgroundColor);
 
         listtransfer.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(context, ViewPagerClass.class);
+                                                 @Override
+                                                 public void onClick(View arg0) {
+                                                     Intent intent = new Intent(context, ViewPagerClass.class);
 
-                intent.putExtra("position", index-1);
-                System.out.println(index-1);
+                                                     intent.putExtra("position", index-1);
+                                                     System.out.println(index-1);
 
-                context.startActivity(intent);
-            }
-        }
+                                                     context.startActivity(intent);
+                                                 }
+                                             }
         );
-    }
-
-    @Override
-    public int getCount() {
-        return itemCount;
-    }
-
-    @Override
-    public long getItemId (int index) {return 0;}
-
-    @Override
-    public Object getItem (int index) {return null;}
-
-    @Override
-    public View getView (int position, View convertView, ViewGroup parent)
-    {
-        View view = new View (context);
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.list_item, null);
-        } else {
-            view = convertView;
-        }
         return view;
     }
 

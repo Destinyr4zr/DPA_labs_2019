@@ -9,11 +9,7 @@ public class JSONHolder {
 
     public static JSONHolder getInstance() {
         JSONHolder localInstance = instance;
-
-        if (localInstance == null) {
-            instance = localInstance = new JSONHolder();
-        }
-
+        if (localInstance == null) { instance = localInstance = new JSONHolder(); }
         return localInstance;
     }
 

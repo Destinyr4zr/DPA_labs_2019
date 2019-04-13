@@ -21,31 +21,19 @@ public class TechFragment extends Fragment {
 
     public TechFragment() {}
 
-//    public TechFragment(String graphic, String helptext) {
-//        Bundle arguments = new Bundle();
-//        this.graphic = graphic;
-//        this.helptext = helptext;
-//        arguments.putString("helptext", helptext);
-//        arguments.putString("graphic", graphic);
-//        this.setArguments(arguments);
-//    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.techfragment, container, false);
-
 
         if(getArguments().getString("graphic") != null)
             graphic = getArguments().getString("graphic");
         if(getArguments().getString("helptext") != null)
             helptext = getArguments().getString("helptext");
-
 
         TextView desc = view.findViewById(R.id.hepltext);
 
@@ -53,11 +41,10 @@ public class TechFragment extends Fragment {
 
         if(!graphic.equals("")) {
             ImageView image = view.findViewById(R.id.graphic);
-            DownloadImageTask load_image_task = new DownloadImageTask(image);
+            DownloadImageTask image_loading = new DownloadImageTask(image);
             String base_url = "https://raw.githubusercontent.com/wesleywerner/ancient-tech/02decf875616dd9692b31658d92e64a20d99f816/src/images/tech/";
-            load_image_task.execute(base_url + graphic);
+            image_loading.execute(base_url + graphic);
         }
-
         return view;
     }
 
@@ -71,14 +58,14 @@ public class TechFragment extends Fragment {
 
         protected Bitmap doInBackground(String... urls) {
             String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
+            Bitmap Bump = null;
             try {
                 InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
+                Bump = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return mIcon11;
+            return Bump;
         }
 
         protected void onPostExecute(Bitmap result) {
