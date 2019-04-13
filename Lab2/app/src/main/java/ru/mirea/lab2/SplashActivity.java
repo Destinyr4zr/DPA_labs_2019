@@ -8,6 +8,8 @@ import android.os.Bundle;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.lang.ref.WeakReference;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -36,12 +38,12 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private static class LoadTask extends AsyncTask<String, Void, String> {
-        final SplashActivity listener;
+        final private WeakReference<SplashActivity> listener;
         OkHttpClient client = new OkHttpClient();
 
         LoadTask(SplashActivity listener) {
             super();
-            this.listener = listener;
+            this.listener = new WeakReference<>(listener);
         }
 
         @Override
@@ -69,21 +71,20 @@ public class SplashActivity extends AppCompatActivity {
 
             try {
                 json = new JSONArray(s);
-            }
-            catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             jsondb.setData(json);
-
-            if (listener != null)
-                listener.onSplashScreenEnd();
+            SplashActivity actilistener = listener.get();
+            if (actilistener != null)
+                actilistener.onDownloadingEND();
         }
-}
-    public void onSplashScreenEnd() {
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-        finish();
     }
-}
+        public void onDownloadingEND() {
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+            finish();
+        }
+    }
 

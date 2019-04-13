@@ -26,19 +26,19 @@ public class ListViewAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    private class ViewHolder (View row, final int position)
+    private class ViewHolder (int position, View convertview, ListViewAdapter listtransfer)
     {
         final int index = position + 1;
         JSONArray data = JSONHolder.getInstance().getData();
 
-        TextView text = row.text;
+        TextView text = listtransfer.text;
         try {
             text.setText(data.getJSONObject(index).getString("name"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        ImageView image = holder.image;
+        ImageView image = listtransfer.image;
 
         DownloadImageTask load_image_task = new DownloadImageTask(image);
         String base_url = "https://raw.githubusercontent.com/wesleywerner/ancient-tech/02decf875616dd9692b31658d92e64a20d99f816/src/images/tech/";
@@ -48,12 +48,12 @@ public class ListViewAdapter extends BaseAdapter {
             e.printStackTrace();
         }
 
-        int backgroundColor = ContextCompat.getColor(holder.itemView.getContext(),
+        int backgroundColor = ContextCompat.getColor(listtransfer.itemView.getContext(),
                 (index) % 2 == 0 ? R.color.gray : R.color.white);
 
-        holder.linearLayout.setBackgroundColor(backgroundColor);
+        listtransfer.linearLayout.setBackgroundColor(backgroundColor);
 
-        holder.view.setOnClickListener(new View.OnClickListener() {
+        listtransfer.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 Intent intent = new Intent(context, ViewPagerClass.class);
@@ -73,7 +73,7 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public long getItemId (int index) {return index;}
+    public long getItemId (int index) {return 0;}
 
     @Override
     public Object getItem (int index) {return null;}
@@ -120,4 +120,5 @@ public class ListViewAdapter extends BaseAdapter {
 
     private int itemCount = 0;
     private Context context;
+    private LayoutInflater inflater;
 }
