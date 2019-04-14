@@ -72,7 +72,7 @@ public class TechFragment extends Fragment {
 
         protected void onPostExecute(Bitmap result) {
             if(result != null) {
-                bmImage.setImageBitmap(result);
+                bmImage.get().setImageBitmap(result);
             }
         }
     }
