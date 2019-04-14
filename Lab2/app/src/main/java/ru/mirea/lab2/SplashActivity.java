@@ -4,11 +4,13 @@ import android.os.AsyncTask;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.lang.ref.WeakReference;
+import java.lang.ref.SoftReference;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -18,17 +20,11 @@ public class SplashActivity extends AppCompatActivity {
     private LoadTask loadTask;
     private String dataurl = "https://raw.githubusercontent.com/wesleywerner/ancient-tech/02decf875616dd9692b31658d92e64a20d99f816/src/";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent intent = new Intent(this, MainActivity.class);
         loadTask = new LoadTask(this);
         loadTask.execute(this.dataurl);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slidein, R.anim.slideout);
-        finish();
     }
 
     @Override
@@ -38,12 +34,12 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private static class LoadTask extends AsyncTask<String, Void, String> {
-        final private WeakReference<SplashActivity> listener;
+        final private SoftReference<SplashActivity> listener;
         OkHttpClient client = new OkHttpClient();
 
         LoadTask(SplashActivity listener) {
             super();
-            this.listener = new WeakReference<>(listener);
+            this.listener = new SoftReference<>(listener);
         }
 
         @Override
@@ -54,6 +50,8 @@ public class SplashActivity extends AppCompatActivity {
 
             try {
                 Response response = client.newCall(request).execute();
+                JSONObject responseobject = new JSONObject(response.body().string());
+                Toast.makeText(this.listener.get(), responseobject.getString("Message"), Toast.LENGTH_LONG).show();
                 return response.body().string();
 
             } catch (Exception e) {
@@ -84,6 +82,7 @@ public class SplashActivity extends AppCompatActivity {
         public void onDownloadingEND() {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
+            overridePendingTransition(R.anim.slidein, R.anim.slideout);
             finish();
         }
     }

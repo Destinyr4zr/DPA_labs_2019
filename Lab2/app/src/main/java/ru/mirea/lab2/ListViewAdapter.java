@@ -26,16 +26,13 @@ public class ListViewAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    private class ViewHolder
-    {
+    private class ViewHolder {
         public View linearLayout;
         private ImageView image;
         private TextView text;
         private View view;
 
-        public ViewHolder (View itemview)
-        {
-//            super(itemview);
+        public ViewHolder(View itemview) {
             image = itemview.findViewById(R.id.itemImage);
             text = itemview.findViewById(R.id.itemText);
             linearLayout = itemview.findViewById(R.id.row);
@@ -49,38 +46,33 @@ public class ListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public long getItemId (int index) {return 0;}
+    public long getItemId(int index) { return 0; }
 
     @Override
-    public Object getItem (int index) {return null;}
+    public Object getItem(int index) { return null; }
 
     @Override
-    public View getView (int position, View convertView, ViewGroup parent)
-    {
-        View view = new View (context);
-        ViewHolder viewHolder = new ViewHolder();
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View view;
+        ViewHolder viewHolder;
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.list_item, null);
+            view = inflater.inflate(R.layout.list_item, parent, false);
             viewHolder = new ViewHolder(view);
             view.setTag(viewHolder);
         } else {
             view = convertView;
-            viewHolder = view.getTag();
+            viewHolder = (ViewHolder) view.getTag();
         }
-
         final int index = position + 1;
         JSONArray data = JSONHolder.getInstance().getData();
-
-        TextView text = listtransfer.text;
+        TextView text = viewHolder.text;
         try {
             text.setText(data.getJSONObject(index).getString("name"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        ImageView image = listtransfer.image;
-
+        ImageView image = viewHolder.image;
         DownloadImageTask load_image_task = new DownloadImageTask(image);
         String base_url = "https://raw.githubusercontent.com/wesleywerner/ancient-tech/02decf875616dd9692b31658d92e64a20d99f816/src/images/tech/";
         try {
@@ -89,22 +81,21 @@ public class ListViewAdapter extends BaseAdapter {
             e.printStackTrace();
         }
 
-        int backgroundColor = ContextCompat.getColor(listtransfer.itemView.getContext(),
-                (index) % 2 == 0 ? R.color.gray : R.color.white);
+        int backgroundColor = ContextCompat.getColor(view.getContext(), (index) % 2 == 0 ? R.color.gray : R.color.white);
 
-        listtransfer.linearLayout.setBackgroundColor(backgroundColor);
+        view.setBackgroundColor(backgroundColor);
 
-        listtransfer.view.setOnClickListener(new View.OnClickListener() {
-                                                 @Override
-                                                 public void onClick(View arg0) {
-                                                     Intent intent = new Intent(context, ViewPagerClass.class);
+        view.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View arg0) {
+                                        Intent intent = new Intent(context, TechListFragment.class);
 
-                                                     intent.putExtra("position", index-1);
-                                                     System.out.println(index-1);
+                                        intent.putExtra("position", index - 1);
+                                        System.out.println(index - 1);
 
-                                                     context.startActivity(intent);
-                                                 }
-                                             }
+                                        context.startActivity(intent);
+                                    }
+                                }
         );
         return view;
     }
@@ -122,15 +113,14 @@ public class ListViewAdapter extends BaseAdapter {
             try {
                 InputStream in = new java.net.URL(urlarray).openStream();
                 bump = BitmapFactory.decodeStream(in);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return bump;
         }
 
         protected void onPostExecute(Bitmap result) {
-            if(result != null) {
+            if (result != null) {
                 bmImage.setImageBitmap(result);
             }
         }

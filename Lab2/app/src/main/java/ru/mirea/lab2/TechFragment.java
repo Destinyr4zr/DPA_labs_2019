@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.InputStream;
+import java.lang.ref.SoftReference;
 
 
 public class TechFragment extends Fragment {
@@ -50,10 +51,10 @@ public class TechFragment extends Fragment {
 
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
+        SoftReference<ImageView> bmImage;
 
         public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
+            this.bmImage =new SoftReference<> (bmImage);
         }
 
         protected Bitmap doInBackground(String... urls) {
@@ -62,10 +63,11 @@ public class TechFragment extends Fragment {
             try {
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 Bump = BitmapFactory.decodeStream(in);
+                return Bump;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return Bump;
+            return null;
         }
 
         protected void onPostExecute(Bitmap result) {
