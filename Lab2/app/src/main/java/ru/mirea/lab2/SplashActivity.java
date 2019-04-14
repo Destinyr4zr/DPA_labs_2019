@@ -18,7 +18,7 @@ import okhttp3.Response;
 
 public class SplashActivity extends AppCompatActivity {
     private LoadTask loadTask;
-    private String dataurl = "https://raw.githubusercontent.com/wesleywerner/ancient-tech/02decf875616dd9692b31658d92e64a20d99f816/src/";
+    private String dataurl = "https://raw.githubusercontent.com/wesleywerner/ancient-tech/02decf875616dd9692b31658d92e64a20d99f816/src/data/techs.ruleset.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +50,6 @@ public class SplashActivity extends AppCompatActivity {
 
             try {
                 Response response = client.newCall(request).execute();
-                JSONObject responseobject = new JSONObject(response.body().string());
-                Toast.makeText(this.listener.get(), responseobject.getString("Message"), Toast.LENGTH_LONG).show();
                 return response.body().string();
 
             } catch (Exception e) {

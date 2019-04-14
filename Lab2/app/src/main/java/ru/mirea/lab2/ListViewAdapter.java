@@ -88,7 +88,7 @@ public class ListViewAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View arg0) {
-                                        Intent intent = new Intent(context, TechListFragment.class);
+                                        Intent intent = new Intent(context, TechSwiper.class);
 
                                         intent.putExtra("position", index - 1);
                                         System.out.println(index - 1);
