@@ -50,7 +50,8 @@ public class SplashActivity extends AppCompatActivity {
 
             try {
                 Response response = client.newCall(request).execute();
-                return response.body().string();
+                if (response.message() != "Bad request")
+                    return response.body().string();
 
             } catch (Exception e) {
                 e.printStackTrace();

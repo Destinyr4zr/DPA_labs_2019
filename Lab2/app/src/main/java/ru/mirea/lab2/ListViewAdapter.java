@@ -80,19 +80,14 @@ public class ListViewAdapter extends BaseAdapter {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         int backgroundColor = ContextCompat.getColor(view.getContext(), (index) % 2 == 0 ? R.color.gray : R.color.white);
-
         view.setBackgroundColor(backgroundColor);
-
         view.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View arg0) {
                                         Intent intent = new Intent(context, TechSwiper.class);
-
                                         intent.putExtra("position", index - 1);
                                         System.out.println(index - 1);
-
                                         context.startActivity(intent);
                                     }
                                 }
@@ -102,11 +97,9 @@ public class ListViewAdapter extends BaseAdapter {
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
-
         public DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
         }
-
         protected Bitmap doInBackground(String... urls) {
             String urlarray = urls[0];
             Bitmap bump = null;
@@ -118,7 +111,6 @@ public class ListViewAdapter extends BaseAdapter {
             }
             return bump;
         }
-
         protected void onPostExecute(Bitmap result) {
             if (result != null) {
                 bmImage.setImageBitmap(result);

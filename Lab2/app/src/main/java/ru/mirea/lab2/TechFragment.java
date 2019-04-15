@@ -37,7 +37,6 @@ public class TechFragment extends Fragment {
             helptext = getArguments().getString("helptext");
 
         TextView desc = view.findViewById(R.id.hepltext);
-
         desc.setText(helptext);
 
         if(!graphic.equals("")) {
