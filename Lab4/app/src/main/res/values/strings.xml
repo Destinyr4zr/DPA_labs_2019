@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Lab4</string>
+    <string name="date_choose_text">Выбрать дату</string>
+</resources>
